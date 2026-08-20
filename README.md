@@ -93,7 +93,7 @@ Controls the application logic:
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/ISS-Live-Tracker.git
+git clone https://github.com/e-wix-7/ISS-Live-Tracker.git
 ```
 
 Open the project folder:
