@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ISS Live Tracker</title>
+
+
+    <!-- 
+         Leaflet CSS
+     -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+
+    <!-- 
+         CSS
+     -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- 
+         Header
+     -->
+
+    <header>
+
+        <div class="header-left">
+
+            <div class="mission-icon">
+                ◉
+            </div>
+
+
+            <div class="title-container">
+
+                <h1>ISS LIVE TRACKER</h1>
+
+                <p>
+                    International Space Station
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-status">
+
+            <div class="status-dot"></div>
+
+            SYSTEM ONLINE
+
+        </div>
+
+    </header>
+
+
+
+    <!-- 
+         Main Content
+     -->
+
+    <main>
+
+
+        <!-- 
+             Map
+         -->
+
+        <section class="map-section">
+
+            <div class="section-label">
+                ORBITAL POSITION
+            </div>
+
+
+            <!-- Leaflet Map -->
+            <div id="map"></div>
+
+        </section>
+
+        
+
+        <!-- 
+             Sidebar
+         -->
+
+        <aside class="sidebar">
+
+
+            <!-- 
+                 Live Telemetry
+             -->
+
+            <section class="panel">
+
+                <div class="panel-title">
+                    Live Telemetry
+                </div>
+
+
+                <!-- Latitude -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        LATITUDE
+                    </div>
+
+                    <div class="telemetry-value">
+
+                        <span id="latitude">
+                            42.381
+                        </span>°
+
+                    </div>
+
+                </div>
+
+
+                <!-- Longtitude -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        LONGITUDE
+                    </div>
+
+                    <div class="telemetry-value">
+
+                        <span id="longitude">
+                            -71.204
+                        </span>°
+
+                    </div>
+
+                </div>
+
+
+                <!-- Altitude -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        ALTITUDE
+                    </div>
+
+                    <div class="telemetry-value">
+
+                        <span id="altitude">
+                            408
+                        </span>
+
+                        <span>
+                            km
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Velocity -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        VELOCITY
+                    </div>
+
+                    <div class="telemetry-value">
+
+                        <span id="velocity">
+                            27,600
+                        </span>
+
+                        <span>
+                            km/h
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- 
+                 Mission status
+             -->
+
+            <section class="panel">
+
+                <div class="panel-title">
+                    Mission Status
+                </div>
+
+
+                <div class="live-status">
+
+                    <div class="large-dot"></div>
+
+                    LIVE
+
+                </div>
+
+
+                <div class="updated">
+                    Last updated
+                </div>
+
+
+                <div
+                    class="updated-time"
+                    id="last-updated"
+                >
+                    --:--:--
+                </div>
+
+            </section>
+
+
+
+            <!-- 
+                 Mission Information
+             -->
+
+            <section class="panel">
+
+                <div class="panel-title">
+                    Mission Information
+                </div>
+
+
+                <!-- Object -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        OBJECT
+                    </div>
+
+                    <div class="telemetry-value">
+                        ISS
+                    </div>
+
+                </div>
+
+
+                <!-- Nora ID -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        NORAD ID
+                    </div>
+
+                    <div class="telemetry-value">
+                        25544
+                    </div>
+
+                </div>
+
+
+                <!-- Update Rate -->
+
+                <div class="telemetry-item">
+
+                    <div class="telemetry-label">
+                        UPDATE RATE
+                    </div>
+
+                    <div class="telemetry-value">
+
+                        1
+
+                        <span>
+                            SEC
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </aside>
+
+    </main>
+
+
+
+    <!-- 
+         Footer
+     -->
+
+    <footer>
+
+        <div>
+            ISS TRACKING SYSTEM
+        </div>
+
+
+        <div>
+            REAL-TIME ORBITAL DATA
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- 
+     Leaflet JS
+     MUST LOAD BEFORE SCRIPT.JS
+ -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+</html>

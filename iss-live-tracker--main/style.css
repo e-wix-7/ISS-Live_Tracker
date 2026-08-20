@@ -1,0 +1,575 @@
+/* 
+   Reset CSS
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #05080d;
+
+    color: #e8edf2;
+
+    min-height: 100vh;
+}
+
+
+.app {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 
+   Header
+ */
+
+header {
+    height: 90px;
+
+    padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #080d14;
+
+    border-bottom: 1px solid #1b2733;
+}
+
+
+.header-left {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+.mission-icon {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #3c566d;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #4ddcff;
+
+    font-size: 20px;
+}
+
+
+.title-container h1 {
+    font-size: 22px;
+
+    letter-spacing: 3px;
+
+    font-weight: 600;
+}
+
+
+.title-container p {
+    margin-top: 5px;
+
+    color: #7e91a3;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================
+   HEADER STATUS
+========================= */
+
+.header-status {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: #4dff9a;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    background: #4dff9a;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 10px #4dff9a;
+}
+
+
+/* 
+   Main
+ */
+
+main {
+    flex: 1;
+
+    padding: 25px 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        330px;
+
+    gap: 25px;
+}
+
+
+/* 
+   Map Section
+ */
+
+.map-section {
+    min-height: 600px;
+
+    background: #080d14;
+
+    border: 1px solid #1b2733;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+
+/* 
+   Map
+ */
+
+#map {
+    width: 100%;
+
+    height: 600px;
+
+    position: relative;
+
+    background: #05080d;
+}
+
+.leaflet-tile-pane {
+    filter:
+        brightness(0.75)
+        contrast(1.15)
+        saturate(0.6);
+}
+
+
+/* 
+   Map label
+ */
+
+.section-label {
+    position: absolute;
+
+    z-index: 1000;
+
+    top: 15px;
+    left: 15px;
+
+    padding: 7px 11px;
+
+    background: rgba(5, 8, 13, 0.9);
+
+    border: 1px solid #263746;
+
+    color: #8fa5b8;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* 
+   Leaflet Controls
+ */
+
+.leaflet-control-zoom {
+    border: 1px solid #263746 !important;
+}
+
+
+.leaflet-control-zoom a {
+    background: #080d14 !important;
+
+    color: #8fa5b8 !important;
+
+    border-bottom: 1px solid #263746 !important;
+}
+
+
+.leaflet-control-zoom a:hover {
+    background: #101923 !important;
+
+    color: #4ddcff !important;
+}
+
+
+.leaflet-control-attribution {
+    background: rgba(5, 8, 13, 0.75) !important;
+
+    color: #526779 !important;
+}
+
+
+.leaflet-control-attribution a {
+    color: #6f879b !important;
+}
+
+
+/* 
+   ISS marker
+ */
+
+.iss-marker {
+    background: transparent;
+
+    border: none;
+}
+
+
+.iss-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(77, 220, 255, 0.08);
+
+    border:
+        1px solid rgba(77, 220, 255, 0.6);
+
+    box-shadow:
+        0 0 10px rgba(77, 220, 255, 0.9),
+        0 0 25px rgba(77, 220, 255, 0.6),
+        0 0 50px rgba(77, 220, 255, 0.3);
+
+    filter:
+        drop-shadow(0 0 5px #4ddcff)
+        drop-shadow(0 0 15px #4ddcff);
+
+    animation:
+        issPulse 2s infinite ease-in-out;
+}
+
+
+/* 
+   ISS pulse animation
+ */
+
+@keyframes issPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* 
+   Sidebar
+ */
+
+.sidebar {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+.panel {
+    background: #080d14;
+
+    border: 1px solid #1b2733;
+
+    border-radius: 6px;
+
+    padding: 22px;
+}
+
+
+.panel-title {
+    color: #687e91;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid #1b2733;
+}
+
+
+/* 
+   Telemetry
+ */
+
+.telemetry-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #131d27;
+}
+
+
+.telemetry-item:last-child {
+    border-bottom: none;
+}
+
+
+.telemetry-label {
+    color: #708597;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+}
+
+
+.telemetry-value {
+    color: #e8edf2;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+.telemetry-value span {
+    color: #5e7182;
+
+    font-size: 11px;
+
+    font-weight: normal;
+}
+
+
+/* 
+   Status
+ */
+
+.live-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #4dff9a;
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+
+    font-weight: bold;
+}
+
+
+.large-dot {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #4dff9a;
+
+    box-shadow: 0 0 15px #4dff9a;
+}
+
+
+.updated {
+    margin-top: 22px;
+
+    color: #687e91;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+.updated-time {
+    margin-top: 7px;
+
+    color: #e8edf2;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 15px;
+}
+
+
+/* 
+   Footer
+ */
+
+footer {
+    height: 45px;
+
+    padding: 0 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top: 1px solid #1b2733;
+
+    color: #4c6072;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* 
+   Responsive
+ */
+
+@media (max-width: 900px) {
+
+    header {
+        padding: 0 20px;
+    }
+
+
+    main {
+        padding: 20px;
+
+        grid-template-columns: 1fr;
+    }
+
+
+    #map {
+        width: 100%;
+
+        height: 600px;
+    }
+
+
+    .header-status {
+        display: none;
+    }
+
+
+    footer {
+        padding: 0 20px;
+    }
+
+}
+
+
+/* 
+   Small movile
+ */
+
+@media (max-width: 500px) {
+
+    .title-container h1 {
+        font-size: 17px;
+    }
+
+
+    .title-container p {
+        font-size: 9px;
+    }
+
+
+    .mission-icon {
+        width: 35px;
+
+        height: 35px;
+    }
+
+
+    main {
+        padding: 12px;
+    }
+
+
+    .panel {
+        padding: 17px;
+    }
+
+
+    #map {
+        height: 500px;
+    }
+
+
+    .iss-icon {
+        width: 60px;
+
+        height: 60px;
+
+        font-size: 38px;
+    }
+
+}
