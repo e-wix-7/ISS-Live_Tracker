@@ -20,7 +20,7 @@ L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
         attribution:
-            "&copy; OpenStreetMap contributors &copy; CARTO",
+            "&copy; OpenStreetMap contributors"
 
         maxZoom: 19
     }
