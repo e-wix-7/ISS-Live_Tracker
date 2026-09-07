@@ -1,55 +1,482 @@
-<!--
-ISS TRACKER — HTML ADDITIONS
+<!DOCTYPE html>
 
-1. Add this BEFORE your app.js script:
--->
-<script src="https://unpkg.com/satellite.js@7.1.0/dist/satellite.min.js"></script>
+<html lang="en">
 
-<!--
-2. Replace your current JS include with:
--->
-<script src="app.js"></script>
+<head>
 
-<!--
-3. Add this block inside <main>, preferably below the map section
-   or below the sidebar, for orbital information.
--->
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>ISS Live Tracker</title>
+
+
+<!-- =====================================================
+     LEAFLET CSS
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+>
+
+
+<!-- =====================================================
+     MAIN CSS
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<!-- Phase 2 additions -->
+<link
+    rel="stylesheet"
+    href="phase2.css"
+>
+```
+
+</head>
+
+<body>
+
+<div class="app">
+
+```
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header>
+
+    <div class="header-left">
+
+        <div class="mission-icon">
+            ◉
+        </div>
+
+
+        <div class="title-container">
+
+            <h1>ISS LIVE TRACKER</h1>
+
+            <p>
+                International Space Station
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-status">
+
+        <div class="status-dot"></div>
+
+        SYSTEM ONLINE
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         MAP
+    ================================================== -->
+
+    <section class="map-section">
+
+        <div class="section-label">
+            ORBITAL POSITION
+        </div>
+
+
+        <!-- Leaflet map -->
+
+        <div id="map"></div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- =============================================
+             LIVE TELEMETRY
+        ============================================== -->
+
+        <section class="panel">
+
+            <div class="panel-title">
+                Live Telemetry
+            </div>
+
+
+            <!-- Latitude -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    LATITUDE
+                </div>
+
+                <div class="telemetry-value">
+
+                    <span id="latitude">
+                        --
+                    </span>°
+
+                </div>
+
+            </div>
+
+
+            <!-- Longitude -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    LONGITUDE
+                </div>
+
+                <div class="telemetry-value">
+
+                    <span id="longitude">
+                        --
+                    </span>°
+
+                </div>
+
+            </div>
+
+
+            <!-- Altitude -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    ALTITUDE
+                </div>
+
+                <div class="telemetry-value">
+
+                    <span id="altitude">
+                        --
+                    </span>
+
+                    <span>
+                        km
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Velocity -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    VELOCITY
+                </div>
+
+                <div class="telemetry-value">
+
+                    <span id="velocity">
+                        --
+                    </span>
+
+                    <span>
+                        km/h
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =============================================
+             MISSION STATUS
+        ============================================== -->
+
+        <section class="panel">
+
+            <div class="panel-title">
+                Mission Status
+            </div>
+
+
+            <div class="live-status">
+
+                <div class="large-dot"></div>
+
+                LIVE
+
+            </div>
+
+
+            <div class="updated">
+                Last updated
+            </div>
+
+
+            <div
+                class="updated-time"
+                id="last-updated"
+            >
+                --:--:--
+            </div>
+
+        </section>
+
+
+
+        <!-- =============================================
+             MISSION INFORMATION
+        ============================================== -->
+
+        <section class="panel">
+
+            <div class="panel-title">
+                Mission Information
+            </div>
+
+
+            <!-- Object -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    OBJECT
+                </div>
+
+                <div class="telemetry-value">
+                    ISS
+                </div>
+
+            </div>
+
+
+            <!-- NORAD ID -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    NORAD ID
+                </div>
+
+                <div class="telemetry-value">
+                    25544
+                </div>
+
+            </div>
+
+
+            <!-- Update Rate -->
+
+            <div class="telemetry-item">
+
+                <div class="telemetry-label">
+                    UPDATE RATE
+                </div>
+
+                <div class="telemetry-value">
+
+                    1
+
+                    <span>
+                        SEC
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =============================================
+             CURRENT REGION
+        ============================================== -->
+
+        <section class="panel">
+
+            <div class="panel-title">
+                Current Region
+            </div>
+
+
+            <div id="current-region">
+
+                <div>
+
+                    <div class="telemetry-label">
+                        POSITION
+                    </div>
+
+                    <div class="telemetry-value">
+                        Calculating...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </aside>
+
+</main>
+
+
+
+<!-- =====================================================
+     ORBITAL INFORMATION
+====================================================== -->
+
 <section class="orbital-info panel">
-    <div class="panel-title">Orbital Data</div>
+
+    <div class="panel-title">
+        Orbital Data
+    </div>
+
 
     <div class="orbital-grid">
-        <div>
-            <span class="telemetry-label">ORBIT PERIOD</span>
-            <strong>~92.96 min</strong>
-        </div>
+
+
+        <!-- Orbit period -->
 
         <div>
-            <span class="telemetry-label">INCLINATION</span>
-            <strong>~51.63°</strong>
+
+            <span class="telemetry-label">
+                ORBIT PERIOD
+            </span>
+
+            <strong>
+                ~92.96 min
+            </strong>
+
         </div>
 
-        <div>
-            <span class="telemetry-label">ORBIT TYPE</span>
-            <strong>LOW EARTH ORBIT</strong>
-        </div>
+
+        <!-- Inclination -->
 
         <div>
-            <span class="telemetry-label">NORAD ID</span>
-            <strong>25544</strong>
+
+            <span class="telemetry-label">
+                INCLINATION
+            </span>
+
+            <strong>
+                ~51.63°
+            </strong>
+
         </div>
+
+
+        <!-- Orbit type -->
+
+        <div>
+
+            <span class="telemetry-label">
+                ORBIT TYPE
+            </span>
+
+            <strong>
+                LOW EARTH ORBIT
+            </strong>
+
+        </div>
+
+
+        <!-- NORAD -->
+
+        <div>
+
+            <span class="telemetry-label">
+                NORAD ID
+            </span>
+
+            <strong>
+                25544
+            </strong>
+
+        </div>
+
+
     </div>
+
 </section>
 
-<!--
-4. Optional future country/city panel placeholder.
-   The existing app.js does not populate this yet; it gives you the UI
-   location for the next module.
--->
-<section class="panel">
-    <div class="panel-title">Current Region</div>
 
-    <div id="current-region">
-        <div class="telemetry-label">POSITION</div>
-        <div class="telemetry-value">Calculating...</div>
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div>
+        ISS TRACKING SYSTEM
     </div>
-</section>
+
+
+    <div>
+        REAL-TIME ORBITAL DATA
+    </div>
+
+</footer>
+```
+
+</div>
+
+<!-- =========================================================
+     LEAFLET JAVASCRIPT
+========================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<!-- =========================================================
+     SATELLITE.JS
+     
+     Used for SGP4 orbital propagation.
+========================================================== -->
+
+<script
+    src="https://unpkg.com/satellite.js@7.1.0/dist/satellite.min.js"
+></script>
+
+<!-- =========================================================
+     MAIN APPLICATION
+========================================================== -->
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
