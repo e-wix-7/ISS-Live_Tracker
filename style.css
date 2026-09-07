@@ -1,60 +1,280 @@
 /* =========================================================
-   ISS TRACKER — PHASE 2 ADDITIONS
-   Add this AFTER your existing style.css
+   ISS TRACKER â€” BASE STYLES
+   Load this BEFORE phase2.css
 ========================================================= */
 
-.orbital-info {
-    margin: 0 40px 25px;
+:root {
+    --bg: #05070c;
+    --panel-bg: #0d121b;
+    --panel-border: #1c2530;
+    --text-primary: #e8edf2;
+    --text-secondary: #7d8a9a;
+    --accent: #4ddcff;
+    --accent-dim: rgba(77, 220, 255, 0.15);
+    --status-green: #3ddc84;
+    --font-mono: "Courier New", Consolas, monospace;
+    --font-body: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-.orbital-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.orbital-grid > div {
+body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.4;
+}
+
+.app {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mission-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 20px;
+}
+
+.title-container h1 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.title-container p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.header-status {
+    display: flex;
+    align-items: center;
     gap: 8px;
-    padding: 12px 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--status-green);
+    font-family: var(--font-mono);
 }
 
-.orbital-grid strong {
-    color: #e8edf2;
-    font-family: "Courier New", monospace;
-    font-size: 14px;
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-green);
+    box-shadow: 0 0 8px var(--status-green);
+    animation: pulse 2s infinite;
 }
 
-#current-region {
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    padding: 20px 40px;
+    flex: 1;
+}
+
+.map-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    background: #0a0e14;
+}
+
+.iss-icon {
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 6px var(--accent));
+}
+
+/* =========================================================
+   SIDEBAR / PANELS
+========================================================= */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 16px 20px;
+}
+
+.panel-title {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+}
+
+.telemetry-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--panel-border);
 }
 
+.telemetry-item:last-child {
+    border-bottom: none;
+}
+
+.telemetry-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+.telemetry-value {
+    font-size: 15px;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--status-green);
+    font-family: var(--font-mono);
+    margin-bottom: 14px;
+}
+
+.large-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--status-green);
+    box-shadow: 0 0 10px var(--status-green);
+    animation: pulse 2s infinite;
+}
+
+.updated {
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.updated-time {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-top: 4px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-top: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media (max-width: 900px) {
-    .orbital-info {
-        margin: 0 20px 20px;
+    header {
+        padding: 14px 20px;
     }
 
-    .orbital-grid {
-        grid-template-columns: repeat(2, 1fr);
+    main {
+        grid-template-columns: 1fr;
+        padding: 16px 20px;
+    }
+
+    #map {
+        height: 400px;
+    }
+
+    footer {
+        padding: 12px 20px;
+        flex-direction: column;
+        gap: 4px;
     }
 }
 
 @media (max-width: 500px) {
-    .orbital-info {
-        margin: 0 12px 12px;
+    .title-container h1 {
+        font-size: 16px;
     }
 
-    .orbital-grid {
-        grid-template-columns: 1fr;
-    }
-
-    #current-region {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
+    #map {
+        height: 320px;
     }
 }
