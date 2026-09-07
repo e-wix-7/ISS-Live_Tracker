@@ -1,0 +1,55 @@
+<!--
+ISS TRACKER — HTML ADDITIONS
+
+1. Add this BEFORE your app.js script:
+-->
+<script src="https://unpkg.com/satellite.js@7.1.0/dist/satellite.min.js"></script>
+
+<!--
+2. Replace your current JS include with:
+-->
+<script src="app.js"></script>
+
+<!--
+3. Add this block inside <main>, preferably below the map section
+   or below the sidebar, for orbital information.
+-->
+<section class="orbital-info panel">
+    <div class="panel-title">Orbital Data</div>
+
+    <div class="orbital-grid">
+        <div>
+            <span class="telemetry-label">ORBIT PERIOD</span>
+            <strong>~92.96 min</strong>
+        </div>
+
+        <div>
+            <span class="telemetry-label">INCLINATION</span>
+            <strong>~51.63°</strong>
+        </div>
+
+        <div>
+            <span class="telemetry-label">ORBIT TYPE</span>
+            <strong>LOW EARTH ORBIT</strong>
+        </div>
+
+        <div>
+            <span class="telemetry-label">NORAD ID</span>
+            <strong>25544</strong>
+        </div>
+    </div>
+</section>
+
+<!--
+4. Optional future country/city panel placeholder.
+   The existing app.js does not populate this yet; it gives you the UI
+   location for the next module.
+-->
+<section class="panel">
+    <div class="panel-title">Current Region</div>
+
+    <div id="current-region">
+        <div class="telemetry-label">POSITION</div>
+        <div class="telemetry-value">Calculating...</div>
+    </div>
+</section>
