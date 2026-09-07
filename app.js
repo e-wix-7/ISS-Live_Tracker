@@ -360,6 +360,13 @@ async function updateISS() {
             Number(data.longitude)
         );
 
+        if (typeof updateCurrentRegion === "function") {
+            updateCurrentRegion(
+                Number(data.latitude),
+                Number(data.longitude)
+            );
+        }
+
     } catch (error) {
         console.error("ISS API ERROR:", error);
     }
