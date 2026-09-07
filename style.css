@@ -278,3 +278,66 @@ footer {
         height: 320px;
     }
 }
+
+
+/* =========================================================
+   ISS TRACKER — PHASE 2 ADDITIONS
+   Add this AFTER your existing style.css
+========================================================= */
+
+.orbital-info {
+    margin: 0 40px 25px;
+}
+
+.orbital-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.orbital-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+}
+
+.orbital-grid strong {
+    color: var(--accent, #4ddcff);
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#current-region {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .orbital-info {
+        margin: 0 20px 20px;
+    }
+
+    .orbital-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .orbital-info {
+        margin: 0 12px 12px;
+    }
+
+    .orbital-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #current-region {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
