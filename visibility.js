@@ -529,6 +529,10 @@ function setObserverLocation(latitude, longitude) {
     observerLocation = { latitude, longitude };
     saveObserverLocation(observerLocation);
     updateObserverLocationDisplay();
+
+    const errorEl = document.getElementById("observer-form-error");
+    if (errorEl) errorEl.textContent = "";
+
     refreshPasses(true);
     updateVisibilityStatus();
 }
@@ -571,15 +575,30 @@ function initialiseVisibility() {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
 
-            const lat = parseFloat(document.getElementById("observer-lat").value);
-            const lon = parseFloat(document.getElementById("observer-lon").value);
+            const latRaw = document.getElementById("observer-lat").value.trim();
+            const lonRaw = document.getElementById("observer-lon").value.trim();
+
+            // Accept a comma as a decimal separator (e.g. "40,4168"), not
+            // just a period, since a plain number input silently rejects
+            // commas in many locales instead of showing an error.
+            const lat = parseFloat(latRaw.replace(",", "."));
+            const lon = parseFloat(lonRaw.replace(",", "."));
 
             const validLat = Number.isFinite(lat) && lat >= -90 && lat <= 90;
             const validLon = Number.isFinite(lon) && lon >= -180 && lon <= 180;
 
-            if (validLat && validLon) {
-                setObserverLocation(lat, lon);
+            const errorEl = document.getElementById("observer-form-error");
+
+            if (!validLat || !validLon) {
+                if (errorEl) {
+                    errorEl.textContent =
+                        "Enter a valid latitude (-90 to 90) and longitude (-180 to 180).";
+                }
+                return;
             }
+
+            if (errorEl) errorEl.textContent = "";
+            setObserverLocation(lat, lon);
         });
     }
 
