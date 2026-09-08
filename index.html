@@ -39,6 +39,12 @@
     href="phase2.css"
 >
 
+<!-- Phase 3 & 4 additions -->
+<link
+    rel="stylesheet"
+    href="phase3.css"
+>
+
 </head>
 
 <body>
@@ -431,6 +437,116 @@
 
 
 <!-- =====================================================
+     OBSERVER LOCATION & LIVE VISIBILITY
+====================================================== -->
+
+<section class="visibility-section">
+
+    <div class="panel observer-panel">
+
+        <div class="panel-title">
+            Observer Location
+        </div>
+
+        <form id="observer-form" class="observer-form">
+
+            <div class="observer-field">
+                <label for="observer-lat">LATITUDE</label>
+                <input
+                    type="number"
+                    id="observer-lat"
+                    step="0.0001"
+                    min="-90"
+                    max="90"
+                    placeholder="e.g. 40.4168"
+                >
+            </div>
+
+            <div class="observer-field">
+                <label for="observer-lon">LONGITUDE</label>
+                <input
+                    type="number"
+                    id="observer-lon"
+                    step="0.0001"
+                    min="-180"
+                    max="180"
+                    placeholder="e.g. -3.7038"
+                >
+            </div>
+
+            <div class="observer-actions">
+                <button type="button" id="locate-me-btn" class="btn btn-secondary">
+                    Use My Location
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Set Location
+                </button>
+            </div>
+
+        </form>
+
+        <div class="observer-current">
+            <span class="telemetry-label">CURRENT</span>
+            <span id="observer-location-label" class="telemetry-value">Not set</span>
+        </div>
+
+    </div>
+
+
+    <div class="panel visibility-panel">
+
+        <div class="panel-title">
+            Visibility Status
+        </div>
+
+        <div id="visibility-status" class="visibility-status">
+            <div class="telemetry-value">Set your location to see live visibility</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     UPCOMING PASSES
+====================================================== -->
+
+<section class="panel passes-panel">
+
+    <div class="panel-title">
+        Upcoming ISS Passes
+    </div>
+
+    <div id="pass-list" class="pass-list">
+        <div class="pass-empty">Set your location to calculate upcoming passes.</div>
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GEOGRAPHIC TIMELINE
+====================================================== -->
+
+<section class="panel geo-timeline-panel">
+
+    <div class="panel-title">
+        Geographic Timeline
+    </div>
+
+    <div id="geo-timeline-list" class="geo-timeline-list">
+        <div class="geo-timeline-empty">Calculating ground track...</div>
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
      FOOTER
 ====================================================== -->
 
@@ -472,6 +588,18 @@
 ========================================================== -->
 
 <script src="countries.js"></script>
+
+<!-- =========================================================
+     GEOGRAPHIC TIMELINE (Phase 4)
+========================================================== -->
+
+<script src="geography.js"></script>
+
+<!-- =========================================================
+     VISIBILITY & PASS PREDICTIONS (Phase 3)
+========================================================== -->
+
+<script src="visibility.js"></script>
 
 <!-- =========================================================
      MAIN APPLICATION
