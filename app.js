@@ -7,8 +7,7 @@
 
 const ISS_NORAD_ID = 25544;
 const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544";
-const TLE_URL =
-    "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE";
+const TLE_URL = "https://api.wheretheiss.at/v1/satellites/25544/tles";
 
 const ORBIT_POINTS = 180;
 const ORBIT_MINUTES = 95;
@@ -71,31 +70,26 @@ async function getISSPosition() {
 }
 
 async function getISSTLE() {
+    // Using the same api.wheretheiss.at domain as the live position feed,
+    // rather than CelesTrak directly — CelesTrak's gp.php endpoint doesn't
+    // send CORS headers, so a direct browser fetch to it from a GitHub
+    // Pages origin is silently blocked and never reaches the .catch below
+    // as a clear error; it just never resolves as useful data.
     const response = await fetch(TLE_URL, { cache: "no-store" });
 
     if (!response.ok) {
-        throw new Error(`CelesTrak returned ${response.status}`);
+        throw new Error(`TLE endpoint returned ${response.status}`);
     }
 
-    const text = await response.text();
-    const lines = text.trim().split(/\r?\n/).filter(Boolean);
+    const data = await response.json();
 
-    // CelesTrak TLE format normally returns:
-    // ISS (ZARYA)
-    // 1 25544...
-    // 2 25544...
-    const line1Index = lines.findIndex(line => line.startsWith("1 "));
-    const line2Index = lines.findIndex((line, index) =>
-        index > line1Index && line.startsWith("2 ")
-    );
-
-    if (line1Index === -1 || line2Index === -1) {
+    if (!data.line1 || !data.line2) {
         throw new Error("Could not find a valid ISS TLE.");
     }
 
     return {
-        line1: lines[line1Index],
-        line2: lines[line2Index]
+        line1: data.line1,
+        line2: data.line2
     };
 }
 
@@ -402,6 +396,28 @@ async function initialiseOrbitalData() {
 
     } catch (error) {
         console.error("ORBIT INITIALISATION ERROR:", error);
+
+        // Without a satrec, the Visibility, Passes, and Geographic Timeline
+        // panels have nothing to compute from — say so explicitly instead
+        // of leaving them stuck on their initial "set your location" /
+        // "calculating..." text forever with no visible explanation.
+        const passList = document.getElementById("pass-list");
+        if (passList) {
+            passList.innerHTML =
+                '<div class="pass-empty">Unable to load ISS orbital data — passes can\'t be calculated right now.</div>';
+        }
+
+        const visibilityStatus = document.getElementById("visibility-status");
+        if (visibilityStatus) {
+            visibilityStatus.innerHTML =
+                '<div class="telemetry-value">Unable to load ISS orbital data</div>';
+        }
+
+        const geoTimeline = document.getElementById("geo-timeline-list");
+        if (geoTimeline) {
+            geoTimeline.innerHTML =
+                '<div class="geo-timeline-error">Unable to load ISS orbital data.</div>';
+        }
     }
 }
 
