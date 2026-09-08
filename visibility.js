@@ -362,6 +362,138 @@ function updateObserverLocationDisplay() {
 }
 
 // -----------------------------------------------------------------------------
+// City search (forward geocoding via Nominatim)
+//
+// Same rate-limit consideration as the reverse-geocoding modules: search
+// only fires after the user pauses typing, and only once the query is a
+// few characters long, to stay well under Nominatim's usage limits.
+// -----------------------------------------------------------------------------
+
+const CITY_SEARCH_DEBOUNCE_MS = 500;
+const CITY_SEARCH_MIN_CHARS = 3;
+
+let citySearchTimeout = null;
+let citySearchAbortController = null;
+
+async function searchCities(query) {
+    if (citySearchAbortController) {
+        citySearchAbortController.abort();
+    }
+    citySearchAbortController = new AbortController();
+
+    const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=6`,
+        {
+            headers: { "Accept": "application/json" },
+            signal: citySearchAbortController.signal
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(`City search returned ${response.status}`);
+    }
+
+    return response.json();
+}
+
+function formatCityResultLabel(result) {
+    const address = result.address || {};
+    const place =
+        address.city ||
+        address.town ||
+        address.village ||
+        address.municipality ||
+        result.display_name.split(",")[0];
+    const region = address.state || address.region || "";
+    const country = address.country || "";
+
+    return [place, region, country].filter(Boolean).join(", ");
+}
+
+function closeCitySearchResults() {
+    const container = document.getElementById("city-search-results");
+    if (container) {
+        container.classList.remove("open");
+        container.innerHTML = "";
+    }
+}
+
+function renderCityResults(results) {
+    const container = document.getElementById("city-search-results");
+    if (!container) return;
+
+    if (!results || results.length === 0) {
+        container.innerHTML = `<div class="city-search-empty">No matches found</div>`;
+        container.classList.add("open");
+        return;
+    }
+
+    container.innerHTML = results.map((result, index) => `
+        <button type="button" class="city-search-result" data-index="${index}">
+            ${formatCityResultLabel(result)}
+        </button>
+    `).join("");
+
+    container.classList.add("open");
+
+    container.querySelectorAll(".city-search-result").forEach(button => {
+        button.addEventListener("click", () => {
+            const index = parseInt(button.dataset.index, 10);
+            const result = results[index];
+            if (!result) return;
+
+            setObserverLocation(parseFloat(result.lat), parseFloat(result.lon));
+            closeCitySearchResults();
+
+            const input = document.getElementById("city-search-input");
+            if (input) input.value = formatCityResultLabel(result);
+        });
+    });
+}
+
+function initialiseCitySearch() {
+    const input = document.getElementById("city-search-input");
+    if (!input) return;
+
+    input.addEventListener("input", () => {
+        const query = input.value.trim();
+
+        clearTimeout(citySearchTimeout);
+
+        if (query.length < CITY_SEARCH_MIN_CHARS) {
+            closeCitySearchResults();
+            return;
+        }
+
+        citySearchTimeout = setTimeout(async () => {
+            const container = document.getElementById("city-search-results");
+            if (container) {
+                container.innerHTML = `<div class="city-search-loading">Searching...</div>`;
+                container.classList.add("open");
+            }
+
+            try {
+                const results = await searchCities(query);
+                renderCityResults(results);
+            } catch (error) {
+                if (error.name === "AbortError") return;
+
+                console.error("CITY SEARCH ERROR:", error);
+                if (container) {
+                    container.innerHTML = `<div class="city-search-empty">Search failed — try again</div>`;
+                }
+            }
+        }, CITY_SEARCH_DEBOUNCE_MS);
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!event.target.closest(".city-search")) {
+            closeCitySearchResults();
+        }
+    });
+}
+
+// -----------------------------------------------------------------------------
 // Orchestration
 // -----------------------------------------------------------------------------
 
@@ -426,6 +558,8 @@ function useBrowserLocation() {
 function initialiseVisibility() {
     observerLocation = loadSavedObserverLocation();
     updateObserverLocationDisplay();
+
+    initialiseCitySearch();
 
     const locateButton = document.getElementById("locate-me-btn");
     if (locateButton) {
