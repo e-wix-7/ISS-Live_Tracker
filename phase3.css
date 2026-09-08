@@ -161,6 +161,15 @@
     gap: 10px;
 }
 
+.observer-form-error {
+    width: 100%;
+    font-size: 12px;
+    color: #ff6b6b;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    min-height: 14px;
+}
+
 .btn {
     border: 1px solid var(--panel-border);
     border-radius: 4px;
