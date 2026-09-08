@@ -367,6 +367,10 @@ async function updateISS() {
             );
         }
 
+        if (window.issSatrec && typeof updateGeographicTimeline === "function") {
+            updateGeographicTimeline(window.issSatrec);
+        }
+
     } catch (error) {
         console.error("ISS API ERROR:", error);
     }
@@ -382,6 +386,10 @@ async function initialiseOrbitalData() {
             tle.line1,
             tle.line2
         );
+
+        // Expose to visibility.js and geography.js, which need the current
+        // satrec but load as independent modules.
+        window.issSatrec = issSatrec;
 
         drawPredictedOrbit();
         drawTerminator();
