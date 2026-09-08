@@ -227,9 +227,15 @@ ISS-Live-Tracker/
 │
 ├── phase2.css
 │
+├── phase3.css
+│
 ├── app.js
 │
 ├── countries.js
+│
+├── geography.js
+│
+├── visibility.js
 │
 └── README.md
 ```
@@ -276,6 +282,14 @@ It handles:
 Contains the country/city reverse-geocoding functionality.
 
 It is separated from the main tracking system to prevent unnecessary requests to the geocoding service.
+
+### `geography.js`
+
+Samples the predicted ground track a short distance into the future and reverse-geocodes each point, powering the Geographic Timeline panel — upcoming countries and cities with an ETA for each.
+
+### `visibility.js`
+
+Handles observer location (manual entry or browser geolocation, saved locally), live visibility status (elevation, azimuth, whether the ISS is currently visible), and upcoming pass predictions with rise/set times, max elevation, duration, and visibility quality.
 
 ---
 
@@ -369,30 +383,26 @@ The project is being developed progressively.
 
 ### 🌍 Phase 3 — ISS Visibility
 
-Planned features:
-
-* [ ] User location selection
-* [ ] ISS visibility calculations
-* [ ] Upcoming ISS passes
-* [ ] Rise and set times
-* [ ] Maximum elevation
-* [ ] Pass duration
-* [ ] Visibility quality
-* [ ] Day/night visibility conditions
+* [x] User location selection
+* [x] ISS visibility calculations
+* [x] Upcoming ISS passes
+* [x] Rise and set times
+* [x] Maximum elevation
+* [x] Pass duration
+* [x] Visibility quality
+* [x] Day/night visibility conditions
 
 ---
 
 ### 🌎 Phase 4 — Geographic Information
 
-Planned features:
-
-* [ ] Current country
-* [ ] Nearest city
-* [ ] Upcoming countries
-* [ ] Upcoming cities
-* [ ] Ground-track predictions
-* [ ] Geographic timeline
-* [ ] Location information panel
+* [x] Current country
+* [x] Nearest city
+* [x] Upcoming countries
+* [x] Upcoming cities
+* [x] Ground-track predictions
+* [x] Geographic timeline
+* [x] Location information panel
 
 ---
 
