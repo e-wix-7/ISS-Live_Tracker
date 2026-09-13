@@ -277,7 +277,6 @@ function drawTerminator() {
 
     const points = [];
 
-    // Great-circle day/night boundary approximation.
     for (let lon = -180; lon <= 180; lon += 2) {
         const lonDifference =
             (lon - sun.longitude) * Math.PI / 180;
@@ -290,12 +289,16 @@ function drawTerminator() {
         points.push([latitude, lon]);
     }
 
+    // Close the polygon at whichever pole is currently on the night side,
+    // so the fill always covers the dark hemisphere, not the lit one.
+    const nightPoleLat = sun.latitude >= 0 ? -90 : 90;
+
     terminatorLayer = L.polygon(
         [
             points,
             [
-                [90, 180],
-                [90, -180]
+                [nightPoleLat, 180],
+                [nightPoleLat, -180]
             ]
         ],
         {
