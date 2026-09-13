@@ -277,6 +277,7 @@ function drawTerminator() {
 
     const points = [];
 
+    // Great-circle day/night boundary approximation.
     for (let lon = -180; lon <= 180; lon += 2) {
         const lonDifference =
             (lon - sun.longitude) * Math.PI / 180;
@@ -289,25 +290,28 @@ function drawTerminator() {
         points.push([latitude, lon]);
     }
 
-    // Close the polygon at whichever pole is currently on the night side,
-    // so the fill always covers the dark hemisphere, not the lit one.
+    // The terminator curve above only traces the boundary line — on its
+    // own it isn't a closed shape, so Leaflet has to decide how to close
+    // it into a fillable polygon. Whichever pole we close the ring at is
+    // the side that ends up shaded, so we have to pick the pole that is
+    // actually in darkness right now (opposite sign to the sun's
+    // declination), and append it to the SAME ring rather than as a
+    // second nested array — a nested array is read by Leaflet as a
+    // separate hole/ring, not as more points on the same ring, which is
+    // why appending the pole coordinates previously had no visible effect.
     const nightPoleLat = sun.latitude >= 0 ? -90 : 90;
 
-    terminatorLayer = L.polygon(
-        [
-            points,
-            [
-                [nightPoleLat, 180],
-                [nightPoleLat, -180]
-            ]
-        ],
-        {
-            stroke: false,
-            fillColor: "#02050a",
-            fillOpacity: 0.28,
-            interactive: false
-        }
-    ).addTo(map);
+    const ring = points.concat([
+        [nightPoleLat, 180],
+        [nightPoleLat, -180]
+    ]);
+
+    terminatorLayer = L.polygon(ring, {
+        stroke: false,
+        fillColor: "#02050a",
+        fillOpacity: 0.28,
+        interactive: false
+    }).addTo(map);
 }
 
 // -----------------------------------------------------------------------------
